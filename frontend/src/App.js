@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
+
+import fetchCategories from './actions/categories';
 
 class App extends Component {
   constructor(props) {
@@ -11,14 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = `${process.env.REACT_APP_BACKEND}/categories`;
-    console.log('fetching from url', url);
-    fetch(url, { headers: { 'Authorization': 'whatever-you-want' },
-                 credentials: 'include' } )
-      .then( (res) => { return(res.text()) })
-      .then((data) => {
-        this.setState({backend:data});
-      });
+    this.props.dispatch(fetchCategories());
   }
 
   render() {
@@ -40,4 +37,11 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
+};
+
+export default connect(state => ({
+  categories: state.categories,
+}))(App);
