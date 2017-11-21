@@ -6,8 +6,11 @@ export default function categories (state = [], action) {
   const { type, categories } = action;
   switch (type) {
     case LOAD_CATEGORIES :
-      return categories;
+      return {
+        ...state,
+        items: categories
+      };
     default :
-      return [];
+      return state;
   }
 }

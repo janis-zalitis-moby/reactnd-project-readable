@@ -1,5 +1,36 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+
+*
+{
+  font-family: 'Roboto', sans-serif;
+}
+
+div { outline-style:none;}
+
+.ReactVirtualized__Table__row,
+.ReactVirtualized__Table__headerRow
+{
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-box-orient: horizontal;
+  -moz-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.ReactVirtualized__Table__sortableHeaderColumn
+{
+  cursor: pointer;
+  cursor: hand;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
+import './index.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Home from './containers/home';
 import registerServiceWorker from './registerServiceWorker';
