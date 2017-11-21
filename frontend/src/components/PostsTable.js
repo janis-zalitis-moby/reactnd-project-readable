@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import {
   Table,
@@ -26,6 +25,12 @@ class PostsTable extends Component {
     if(posts.length){
       this.setState({
         sortedPosts: this.sortPosts(posts)
+      });
+    }
+    else
+    {
+      this.setState({
+        sortedPosts: []
       });
     }
   }
@@ -121,7 +126,6 @@ class PostsTable extends Component {
 }
 
 PostsTable.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   categories: PropTypes.array,
   posts: PropTypes.array,
 };
@@ -131,7 +135,4 @@ PostsTable.defaultProps = {
   posts: [],
 };
 
-export default connect(state => ({
-  categories: state.categories.items,
-  posts: state.posts.items,
-}))(PostsTable);
+export default PostsTable;

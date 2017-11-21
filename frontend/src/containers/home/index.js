@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 // visuals
 import {
   AppBar,
-  List,
-  ListItem,
-  Subheader
 } from 'material-ui';
 
 import PostsTable from './../../components/PostsTable';
+import CategoryList from './../../components/CategoryList';
 
 //styling
 // import styles from './index.css';
@@ -18,14 +17,6 @@ import PostsTable from './../../components/PostsTable';
 // reducers
 import fetchCategories from './../../actions/categories';
 import fetchPosts from './../../actions/posts';
-
-const categoryStyle = {
-  marginTop: 20,
-  marginRight: 20,
-  maxWidth: 300,
-  padding: 20,
-  border: '1px solid #ccc',
-}
 
 const postsTableStyle = {
   float: 'left',
@@ -56,13 +47,7 @@ class Home extends Component {
           <PostsTable list={posts} posts={posts} categories={categories} />
         </div>
         <div style={{ float: 'right', width: 305 }}>
-          {categories && categories.length ?
-            (<List style={categoryStyle}>
-              <Subheader>Categories</Subheader>
-              {categories.map(category => (<ListItem key={category.path}>{category.name}</ListItem>))}
-            </List>)
-            : null
-          }
+          <CategoryList categories={categories} />
         </div>
         
       </div>
@@ -81,7 +66,8 @@ Home.defaultProps = {
   posts: [],
 };
 
-export default connect(state => ({
+
+export default withRouter(connect(state => ({
   categories: state.categories.items,
   posts: state.posts.items,
-}))(Home);
+}))(Home));
