@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
+
 import {
   Table,
   Column,
@@ -93,7 +95,9 @@ class PostsTable extends Component {
         >
           <Column
             label="Post title"
-            cellRenderer={({cellData}) => cellData}
+            cellRenderer={({cellData, rowData}) => 
+              (<Link to={`/post/${rowData.id}`}>{cellData}</Link>)
+            }
             dataKey="title"
             disableSort={false}
             width={180}

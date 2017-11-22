@@ -11,6 +11,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Home from './containers/home';
 import Category from './containers/category';
+import Post from './containers/post';
+
 import registerServiceWorker from './registerServiceWorker';
 
 import reducers from './reducers';
@@ -44,6 +46,10 @@ ReactDOM.render(
           <Route
             path="/category/:category"
             component={Category}
+          />
+          <Route
+            path="/post/:postId"
+            component={Post}
           />
         </div>
       </BrowserRouter>

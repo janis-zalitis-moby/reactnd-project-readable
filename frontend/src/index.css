@@ -11,6 +11,12 @@ body {
 
 div { outline-style:none;}
 
+a,
+a:hover
+{
+  text-decoration: none;
+}
+
 .ReactVirtualized__Table__row,
 .ReactVirtualized__Table__headerRow
 {
