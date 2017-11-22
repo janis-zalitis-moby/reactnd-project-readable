@@ -5,14 +5,16 @@ import FlatButton from 'material-ui/FlatButton';
 
 const PostEntry = ({post}) => {
   const categoryLink = `/category/${post.category}`;
+  const date = new Date(parseInt(post.timestamp, 10));
   return(
     <Card>
       <CardHeader
         title={<Link to={categoryLink}>Back to category</Link>}
-        // subtitle="Subtitle"
-        // avatar="images/jsa-128.jpg"
       />
-      <CardTitle title={post.title} subtitle={`By: ${post.author}`} />
+      <CardTitle
+        title={post.title}
+        subtitle={`Posted by: ${post.author}, posted on: ${date.toUTCString()}, votes: ${post.voteScore}`}
+      />
       <CardText>
         {post.body}
       </CardText>
