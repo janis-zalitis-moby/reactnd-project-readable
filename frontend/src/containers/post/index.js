@@ -5,15 +5,34 @@ import { withRouter } from 'react-router';
 
 import PostEntry from './../../components/PostEntry';
 import CommentEntry from './../../components/CommentEntry';
+import CommentDialog from './../../components/CommentDialog';
 
 import { fetchPost, upVotePost, downVotePost } from './../../actions/post';
-import { fetchCommentsForPost, upVoteComment, downVoteComment } from './../../actions/comments';
+import { 
+  fetchCommentsForPost, 
+  upVoteComment, 
+  downVoteComment, 
+  addComment
+} from './../../actions/comments';
 
 const postsContainerStyle = {
   padding: 20,
 }
 
 class Post extends Component {
+  
+  state = {
+    commentDialogOpen: false
+  };
+  
+  commentDialogClose = () => this.setState({ commentDialogOpen: false });
+  
+  commentDialogSubmit = (newComment) => {
+    const { post } = this.props;
+  
+    this.props.dispatch(addComment({ parentId: post.post.id, ...newComment }));
+    this.setState({ commentDialogOpen: false });
+  }
   
   componentDidMount() {
     // this.props.dispatch(fetchCategories());
@@ -23,6 +42,7 @@ class Post extends Component {
 
   render() {
     const { post, comments } = this.props;
+    const { commentDialogOpen } = this.state;
     
     const sortedComments = comments.sort((a, b) => a.voteScore < b.voteScore);
 
@@ -33,6 +53,7 @@ class Post extends Component {
             post={post.post}
             upVote={() => this.props.dispatch(upVotePost(post.post.id))}
             downVote={() => this.props.dispatch(downVotePost(post.post.id))}
+            onComment={() => this.setState({ commentDialogOpen: true })}
           />
           : null
         }
@@ -46,6 +67,12 @@ class Post extends Component {
             />)
           : null
         }
+        <CommentDialog
+          comment={{}}
+          open={commentDialogOpen}
+          onSubmit={this.commentDialogSubmit}
+          onClose={() => this.setState({ commentDialogOpen: false })}
+        />
       </div>
     );
   }

@@ -57,3 +57,20 @@ export function downVoteComment(postId, commentId) {
       .catch(err => { window.console.info('post error'); }); // TODO: make an error param
   };
 };
+
+export function addComment(comment) {
+  return dispatch => {
+    axios
+      .post(`${apiUrl}/comments/`, comment,
+        {
+          //withCredentials: true,
+          headers: apiHeaders
+        }
+      )
+      .then(data => {
+        dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
+        // dispatch(loadComments(data.data));
+      })
+      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+  };
+};
