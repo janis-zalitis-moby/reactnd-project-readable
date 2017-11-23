@@ -21,6 +21,8 @@ const PostEntry = ({post, upVote, downVote}) => {
       <CardActions>
         <FlatButton label="Edit" />
         <FlatButton label="Delete" />
+        <FlatButton label="Agree" onClick={upVote} />
+        <FlatButton label="Disagree" onClick={downVote} />
       </CardActions>
     </Card>
   );

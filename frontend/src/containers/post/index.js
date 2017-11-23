@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import PostEntry from './../../components/PostEntry';
 import CommentEntry from './../../components/CommentEntry';
 
-import fetchPost from './../../actions/post';
+import { fetchPost, upVotePost, downVotePost } from './../../actions/post';
 import { fetchCommentsForPost, upVoteComment, downVoteComment } from './../../actions/comments';
 
 const postsContainerStyle = {
@@ -29,7 +29,11 @@ class Post extends Component {
     return (
       <div style={postsContainerStyle}>
         {post.post ?
-          <PostEntry post={post.post} />
+          <PostEntry
+            post={post.post}
+            upVote={() => this.props.dispatch(upVotePost(post.post.id))}
+            downVote={() => this.props.dispatch(downVotePost(post.post.id))}
+          />
           : null
         }
         {comments.length ?
