@@ -8,6 +8,7 @@ import {
   AppBar,
 } from 'material-ui';
 
+import PostDialog from './../../components/PostDialog';
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
 

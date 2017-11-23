@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import PostEntry from './../../components/PostEntry';
+import PostDialog from './../../components/PostDialog';
+
 import CommentEntry from './../../components/CommentEntry';
 import CommentDialog from './../../components/CommentDialog';
 
@@ -38,7 +40,7 @@ class Post extends Component {
     } else {
       this.props.dispatch(addComment({ parentId: post.post.id, ...newComment }));
     }
-    this.setState({ commentDialogOpen: false });
+    this.setState({ commentDialogOpen: false, currentComment: null });
   }
   
   componentDidMount() {
@@ -80,7 +82,7 @@ class Post extends Component {
           comment={this.state.currentComment}
           open={commentDialogOpen}
           onSubmit={this.commentDialogSubmit}
-          onClose={() => this.setState({ commentDialogOpen: false })}
+          onClose={() => this.setState({ commentDialogOpen: false, currentComment: null })}
         />
       </div>
     );

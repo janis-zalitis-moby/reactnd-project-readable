@@ -8,6 +8,10 @@ import {
   AppBar,
 } from 'material-ui';
 
+import FlatButton from 'material-ui/FlatButton';
+
+import PostDialog from './../../components/PostDialog';
+
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
 
@@ -16,7 +20,7 @@ import CategoryList from './../../components/CategoryList';
 
 // reducers
 import fetchCategories from './../../actions/categories';
-import fetchPosts from './../../actions/posts';
+import { fetchPosts, editPost, addPost, deletePost } from './../../actions/posts';
 
 const postsTableStyle = {
   float: 'left',
@@ -28,14 +32,32 @@ const postsTableStyle = {
 
 class Home extends Component {
   
+  state = {
+    postDialogOpen: false,
+  };
   
   componentDidMount() {
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchPosts());
   }
+  
+  postDialogSubmit = (newPost) => {
+    console.info('postDialogSubmit', newPost);
+    return false;
+
+    const { post } = this.props;
+
+    if(this.state.currentPost) {
+      //this.props.dispatch(editPost(newPost));
+    } else {
+      //this.props.dispatch(addPost({ parentId: post.post.id, ...newPost }));
+    }
+    this.setState({ postDialogOpen: false, currentPost: null });
+  }
 
   render() {
     const { categories, posts } = this.props;
+    const { postDialogOpen } = this.state;
     
     return (
       <div>
@@ -49,7 +71,14 @@ class Home extends Component {
         <div style={{ float: 'right', width: 305 }}>
           <CategoryList categories={categories} />
         </div>
-        
+        <FlatButton label="Add New Post" onClick={() => this.setState({ postDialogOpen: true })} />
+        <PostDialog
+          post={null}
+          categories={categories}
+          open={postDialogOpen}
+          onSubmit={this.postDialogSubmit}
+          onClose={() => this.setState({ postDialogOpen: false })}
+        />
       </div>
     );
   }
