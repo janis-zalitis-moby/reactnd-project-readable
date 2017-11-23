@@ -7,7 +7,7 @@ import PostEntry from './../../components/PostEntry';
 import CommentEntry from './../../components/CommentEntry';
 
 import fetchPost from './../../actions/post';
-import fetchCommentsForPost from './../../actions/comments';
+import { fetchCommentsForPost, upVoteComment, downVoteComment } from './../../actions/comments';
 
 const postsContainerStyle = {
   padding: 20,
@@ -23,6 +23,8 @@ class Post extends Component {
 
   render() {
     const { post, comments } = this.props;
+    
+    const sortedComments = comments.sort((a, b) => a.voteScore < b.voteScore);
 
     return (
       <div style={postsContainerStyle}>
@@ -31,7 +33,13 @@ class Post extends Component {
           : null
         }
         {comments.length ?
-          comments.map(comment => <CommentEntry key={comment.id} comment={comment} />)
+          sortedComments.map(comment => 
+            <CommentEntry
+              key={comment.id}
+              upVote={() => this.props.dispatch(upVoteComment(post.post.id, comment.id))}
+              downVote={() => this.props.dispatch(downVoteComment(post.post.id, comment.id))}
+              comment={comment}
+            />)
           : null
         }
       </div>

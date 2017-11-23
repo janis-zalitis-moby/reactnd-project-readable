@@ -3,7 +3,7 @@ import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Ca
 import { Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 
-const PostEntry = ({post}) => {
+const PostEntry = ({post, upVote, downVote}) => {
   const categoryLink = `/category/${post.category}`;
   const date = new Date(parseInt(post.timestamp, 10));
   return(
@@ -19,8 +19,8 @@ const PostEntry = ({post}) => {
         {post.body}
       </CardText>
       <CardActions>
-        <FlatButton label="Action1" />
-        <FlatButton label="Action2" />
+        <FlatButton label="Edit" />
+        <FlatButton label="Delete" />
       </CardActions>
     </Card>
   );
