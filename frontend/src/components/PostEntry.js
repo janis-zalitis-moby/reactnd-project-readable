@@ -13,7 +13,7 @@ const PostEntry = ({post, upVote, downVote, onEdit, onDelete, onComment}) => {
       />
       <CardTitle
         title={post.title}
-        subtitle={`Posted by: ${post.author}, posted on: ${date.toUTCString()}, votes: ${post.voteScore}`}
+        subtitle={`Posted by: ${post.author}, on: ${date.toUTCString()}, votes: ${post.voteScore}`}
       />
       <CardText>
         {post.body}

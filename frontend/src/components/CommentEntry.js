@@ -8,7 +8,7 @@ const CommentEntry = ({comment, upVote, downVote, onDelete, onEdit}) => {
   return (
     <Card>
       <CardTitle
-        subtitle={`Commented by: ${comment.author}, posted on: ${date.toUTCString()}, votes: ${comment.voteScore}`}
+        subtitle={`Commented by: ${comment.author}, on: ${date.toUTCString()}, votes: ${comment.voteScore}`}
       />
       <CardText>{comment.body}</CardText>
       <CardActions>
