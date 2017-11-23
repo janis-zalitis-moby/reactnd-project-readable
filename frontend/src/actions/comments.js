@@ -74,3 +74,37 @@ export function addComment(comment) {
       .catch(err => { window.console.info('post error'); }); // TODO: make an error param
   };
 };
+
+export function editComment(comment) {
+  return dispatch => {
+    axios
+      .put(`${apiUrl}/comments/${comment.id}`, comment,
+        {
+          //withCredentials: true,
+          headers: apiHeaders
+        }
+      )
+      .then(data => {
+        dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
+        // dispatch(loadComments(data.data));
+      })
+      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+  };
+};
+
+export function deleteComment(comment) {
+  return dispatch => {
+    axios
+      .delete(`${apiUrl}/comments/${comment.id}`,
+        {
+          //withCredentials: true,
+          headers: apiHeaders
+        }
+      )
+      .then(data => {
+        dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
+        // dispatch(loadComments(data.data));
+      })
+      .catch(err => { window.console.info('delete error'); }); // TODO: make an error param
+  };
+}

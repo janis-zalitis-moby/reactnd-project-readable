@@ -12,7 +12,9 @@ import {
   fetchCommentsForPost, 
   upVoteComment, 
   downVoteComment, 
-  addComment
+  addComment,
+  deleteComment,
+  editComment
 } from './../../actions/comments';
 
 const postsContainerStyle = {
@@ -22,7 +24,8 @@ const postsContainerStyle = {
 class Post extends Component {
   
   state = {
-    commentDialogOpen: false
+    commentDialogOpen: false,
+    currentComment: null,
   };
   
   commentDialogClose = () => this.setState({ commentDialogOpen: false });
@@ -30,7 +33,11 @@ class Post extends Component {
   commentDialogSubmit = (newComment) => {
     const { post } = this.props;
   
-    this.props.dispatch(addComment({ parentId: post.post.id, ...newComment }));
+    if(this.state.currentComment) {
+      this.props.dispatch(editComment(newComment));
+    } else {
+      this.props.dispatch(addComment({ parentId: post.post.id, ...newComment }));
+    }
     this.setState({ commentDialogOpen: false });
   }
   
@@ -53,7 +60,7 @@ class Post extends Component {
             post={post.post}
             upVote={() => this.props.dispatch(upVotePost(post.post.id))}
             downVote={() => this.props.dispatch(downVotePost(post.post.id))}
-            onComment={() => this.setState({ commentDialogOpen: true })}
+            onComment={() => this.setState({ commentDialogOpen: true, currentComment: null })}
           />
           : null
         }
@@ -63,12 +70,14 @@ class Post extends Component {
               key={comment.id}
               upVote={() => this.props.dispatch(upVoteComment(post.post.id, comment.id))}
               downVote={() => this.props.dispatch(downVoteComment(post.post.id, comment.id))}
+              onDelete={() => this.props.dispatch(deleteComment(comment))}
+              onEdit={() => this.setState({ commentDialogOpen: true, currentComment: comment })}
               comment={comment}
             />)
           : null
         }
         <CommentDialog
-          comment={{}}
+          comment={this.state.currentComment}
           open={commentDialogOpen}
           onSubmit={this.commentDialogSubmit}
           onClose={() => this.setState({ commentDialogOpen: false })}

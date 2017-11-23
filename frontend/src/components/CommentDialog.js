@@ -14,6 +14,15 @@ class CommentDialog extends Component {
     body: '',
   };
   
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.comment){
+      this.setState({
+        author: nextProps.comment.author,
+        body: nextProps.comment.body,
+      });
+    }
+  }
+  
   handleAuthorChange = (e, author) => this.setState({ author });
   
   handleBodyChange = (e, body) => this.setState({ body });
@@ -26,9 +35,10 @@ class CommentDialog extends Component {
     if (comment.id)
     {
       const newComment = {
+        ...comment,
         author: this.state.author,
         body: this.state.body,
-        ...comment
+        timestamp: new Date().getTime(),
       }
       this.props.onSubmit(newComment);
     }
