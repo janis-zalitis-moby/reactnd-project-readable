@@ -87,10 +87,10 @@ export function editPost(post) {
   };
 };
 
-export function deletePost(post) {
+export function deletePost(postId) {
   return dispatch => {
     axios
-      .delete(`${apiUrl}/posts/${post.id}`,
+      .delete(`${apiUrl}/posts/${postId}`,
         {
           //withCredentials: true,
           headers: apiHeaders
