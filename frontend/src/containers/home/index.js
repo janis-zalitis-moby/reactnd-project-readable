@@ -11,7 +11,6 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 
 import PostDialog from './../../components/PostDialog';
-
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
 
@@ -20,7 +19,7 @@ import CategoryList from './../../components/CategoryList';
 
 // reducers
 import fetchCategories from './../../actions/categories';
-import { fetchPosts, editPost, addPost, deletePost } from './../../actions/posts';
+import { fetchPosts, addPost } from './../../actions/posts';
 
 const postsTableStyle = {
   float: 'left',
@@ -41,18 +40,18 @@ class Home extends Component {
     this.props.dispatch(fetchPosts());
   }
   
-  postDialogSubmit = (newPost) => {
-    console.info('postDialogSubmit', newPost);
-    return false;
-
-    const { post } = this.props;
-
-    if(this.state.currentPost) {
-      //this.props.dispatch(editPost(newPost));
-    } else {
-      //this.props.dispatch(addPost({ parentId: post.post.id, ...newPost }));
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.outdated && nextProps.outdated !== this.props.outdated)
+    {
+      // refetch data
+      this.props.dispatch(fetchPosts());
     }
-    this.setState({ postDialogOpen: false, currentPost: null });
+  }
+  
+  postDialogSubmit = (newPost) => {
+    this.props.dispatch(addPost(newPost));
+
+    this.setState({ postDialogOpen: false });
   }
 
   render() {
@@ -88,15 +87,18 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   categories: PropTypes.array,
   posts: PropTypes.array,
+  outdated: PropTypes.bool,
 };
 
 Home.defaultProps = {
   categories: [],
   posts: [],
+  outdated: false,
 };
 
 
 export default withRouter(connect(state => ({
   categories: state.categories.items,
   posts: state.posts.items,
+  outdated: state.posts.outdated,
 }))(Home));

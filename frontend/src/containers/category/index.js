@@ -8,6 +8,8 @@ import {
   AppBar,
 } from 'material-ui';
 
+import FlatButton from 'material-ui/FlatButton';
+
 import PostDialog from './../../components/PostDialog';
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
@@ -17,7 +19,7 @@ import CategoryList from './../../components/CategoryList';
 
 // reducers
 import fetchCategories from './../../actions/categories';
-import fetchCategoryPosts from './../../actions/categoryPosts';
+import { fetchCategoryPosts, addPost } from './../../actions/posts';
 
 const postsTableStyle = {
   float: 'left',
@@ -29,20 +31,39 @@ const postsTableStyle = {
 
 class Category extends Component {
   
+  state = {
+    postDialogOpen: false,
+  };
+  
   componentDidMount() {
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
   }
   
   componentWillReceiveProps(nextProps) {
+    // if we navigated to new category
     if(nextProps.match.params.category && nextProps.match.params.category !== this.props.match.params.category)
     {
       this.props.dispatch(fetchCategoryPosts(nextProps.match.params.category));
     }
+    
+    // if we got info that post data got updated
+    if(nextProps.outdated && nextProps.outdated !== this.props.outdated)
+    {
+      // refetch data
+      this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
+    }
+  }
+  
+  postDialogSubmit = (newPost) => {
+    this.props.dispatch(addPost(newPost));
+  
+    this.setState({ postDialogOpen: false });
   }
 
   render() {
     const { categories, posts } = this.props;
+    const { postDialogOpen } = this.state;
     
     return (
       <div>
@@ -56,7 +77,15 @@ class Category extends Component {
         <div style={{ float: 'right', width: 305 }}>
           <CategoryList categories={categories} />
         </div>
-        
+        <FlatButton label="Add New Post" onClick={() => this.setState({ postDialogOpen: true })} />
+        <PostDialog
+          post={null}
+          categories={categories}
+          category={this.props.match.params.category}
+          open={postDialogOpen}
+          onSubmit={this.postDialogSubmit}
+          onClose={() => this.setState({ postDialogOpen: false })}
+        />
       </div>
     );
   }
@@ -67,14 +96,17 @@ Category.propTypes = {
   dispatch: PropTypes.func.isRequired,
   categories: PropTypes.array,
   posts: PropTypes.array,
+  outdated: PropTypes.bool,
 };
 
 Category.defaultProps = {
   categories: [],
   posts: [],
+  outdated: false,
 };
 
 export default withRouter(connect(state => ({
   categories: state.categories.items,
   posts: state.posts.items,
+  outdated: state.posts.outdated,
 }))(Category));

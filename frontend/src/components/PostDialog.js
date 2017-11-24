@@ -20,10 +20,17 @@ class PostDialog extends Component {
   
   componentWillReceiveProps = (nextProps) => {
     if(nextProps.post){
-      console.info('setting', nextProps);
       this.setState({
         author: nextProps.post.author,
+        title: nextProps.post.category,
         body: nextProps.post.body,
+        category: nextProps.post.category,
+      });
+    }
+    
+    if(nextProps.category) {
+      this.setState({
+        category: nextProps.category,
       });
     }
   }
@@ -39,9 +46,9 @@ class PostDialog extends Component {
   handleSubmit = () => {
     
     const { post } = this.props;
-    
+
     // existing post
-    if (post.id)
+    if (post && post.id)
     {
       const newPost = {
         ...post,
@@ -141,12 +148,14 @@ PostDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool,
   categories: PropTypes.array,
+  category: PropTypes.string,
 };
 
 PostDialog.defaultProps = {
   post: {},
   open: false,
   categories: [],
+  category: null,
 };
 
 export default PostDialog;

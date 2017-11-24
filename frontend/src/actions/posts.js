@@ -2,10 +2,21 @@ import axios from 'axios';
 import { apiUrl, apiHeaders } from './../apiUrlConfig';
 
 export const LOAD_POSTS = 'LOAD_POSTS';
+export const LOAD_CATEGORY_POSTS = 'LOAD_CATEGORY_POSTS';
+export const UPDATE_POSTS = 'UPDATE_POSTS';
 
 const loadPosts = posts => ({
   type: LOAD_POSTS,
   posts,
+});
+
+const loadCategoryPosts = posts => ({
+  type: LOAD_CATEGORY_POSTS,
+  posts,
+});
+
+const updatePosts = () => ({
+  type: UPDATE_POSTS
 });
 
 export function fetchPosts() {
@@ -26,6 +37,24 @@ export function fetchPosts() {
   };
 }
 
+export function fetchCategoryPosts(category) {
+  return dispatch => {
+    // dispatch(startPosts()); // TODO: make a loading param
+    
+    axios
+      .get(`${apiUrl}/${category}/posts`,
+        {
+          //withCredentials: true,
+          headers: apiHeaders
+        }
+      )
+      .then(data => {
+        dispatch(loadCategoryPosts(data.data));
+      })
+      .catch(err => { window.console.info('fetch error'); }); // TODO: make an error param
+  };
+}
+
 export function addPost(post) {
   return dispatch => {
     axios
@@ -36,7 +65,7 @@ export function addPost(post) {
         }
       )
       .then(data => {
-        dispatch(fetchPosts()); // re-fetch
+        dispatch(updatePosts()); // trigger re-fetch
       })
       .catch(err => { window.console.info('post error'); }); // TODO: make an error param
   };
@@ -52,7 +81,7 @@ export function editPost(post) {
         }
       )
       .then(data => {
-        dispatch(fetchPosts()); // re-fetch
+        dispatch(updatePosts()); // re-fetch
       })
       .catch(err => { window.console.info('post error'); }); // TODO: make an error param
   };
@@ -68,7 +97,7 @@ export function deletePost(post) {
         }
       )
       .then(data => {
-        dispatch(fetchPosts()); // re-fetch
+        dispatch(updatePosts()); // re-fetch
       })
       .catch(err => { window.console.info('delete error'); }); // TODO: make an error param
   };
