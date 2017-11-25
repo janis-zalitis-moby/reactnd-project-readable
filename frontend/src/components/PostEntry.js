@@ -7,7 +7,7 @@ const PostEntry = ({post, upVote, downVote, onEdit, onDelete, onComment}) => {
   const categoryLink = `/category/${post.category}`;
   const date = new Date(parseInt(post.timestamp, 10));
   return(
-    <Card>
+    <Card style={{ maxWidth: 957 }}>
       <CardHeader
         title={(<span><Link to='/'>Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}
       />

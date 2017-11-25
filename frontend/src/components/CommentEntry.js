@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 const CommentEntry = ({comment, upVote, downVote, onDelete, onEdit}) => {
   const date = new Date(parseInt(comment.timestamp, 10));
   return (
-    <Card>
+    <Card style={{ maxWidth: 957 }}>
       <CardTitle
         subtitle={`Commented by: ${comment.author}, on: ${date.toUTCString()}, votes: ${comment.voteScore}`}
       />

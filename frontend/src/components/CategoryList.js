@@ -12,8 +12,7 @@ import {
 } from 'material-ui';
 
 const categoryStyle = {
-  marginTop: 20,
-  marginRight: 20,
+  margin: 20,
   maxWidth: 300,
 }
 

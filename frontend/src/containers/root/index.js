@@ -74,7 +74,7 @@ class Root extends Component {
             category={(this.props.match.params.category || null)}
           />
         </div>
-        <div style={{ float: 'right', width: 305 }}>
+        <div style={{ float: 'left', width: 305 }}>
           <CategoryList categories={categories} />
         </div>
         <PostDialog
