@@ -8,8 +8,6 @@ import {
   AppBar,
 } from 'material-ui';
 
-import FlatButton from 'material-ui/FlatButton';
-
 import PostDialog from './../../components/PostDialog';
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
@@ -23,10 +21,8 @@ import { fetchCategoryPosts, addPost } from './../../actions/posts';
 
 const postsTableStyle = {
   float: 'left',
-  padding: 20,
   marginTop: 20,
   marginLeft: 20,
-  border: '1px solid #ccc',
 }
 
 class Category extends Component {
@@ -72,12 +68,17 @@ class Category extends Component {
           // iconElementLeft={false} // TODO: make it meaningful
         />
         <div style={postsTableStyle}>
-          <PostsTable list={posts} posts={posts} categories={categories} />
+          <PostsTable
+            list={posts}
+            posts={posts}
+            categories={categories}
+            onNewPost={() => this.setState({ postDialogOpen: true })}
+            category={this.props.match.params.category}
+          />
         </div>
         <div style={{ float: 'right', width: 305 }}>
           <CategoryList categories={categories} />
         </div>
-        <FlatButton label="Add New Post" onClick={() => this.setState({ postDialogOpen: true })} />
         <PostDialog
           post={null}
           categories={categories}

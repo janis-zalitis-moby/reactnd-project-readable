@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import {
+  AppBar,
+} from 'material-ui';
+
 import PostEntry from './../../components/PostEntry';
 import PostDialog from './../../components/PostDialog';
 
@@ -85,43 +89,49 @@ class Post extends Component {
     const sortedComments = comments.sort((a, b) => a.voteScore < b.voteScore);
 
     return (
-      <div style={postsContainerStyle}>
-        {post.post ?
-          <PostEntry
-            post={post.post}
-            upVote={() => this.props.dispatch(upVotePost(post.post.id))}
-            downVote={() => this.props.dispatch(downVotePost(post.post.id))}
-            onComment={() => this.setState({ commentDialogOpen: true, currentComment: null })}
-            onEdit={() => this.setState({ postDialogOpen: true, currentPost: post.post })}
-            onDelete={() => this.handleDeletePost()}
+      <div>
+        <AppBar
+          title="readable"
+          // iconElementLeft={false} // TODO: make it meaningful
+        />
+        <div style={postsContainerStyle}>
+          {post.post ?
+            <PostEntry
+              post={post.post}
+              upVote={() => this.props.dispatch(upVotePost(post.post.id))}
+              downVote={() => this.props.dispatch(downVotePost(post.post.id))}
+              onComment={() => this.setState({ commentDialogOpen: true, currentComment: null })}
+              onEdit={() => this.setState({ postDialogOpen: true, currentPost: post.post })}
+              onDelete={() => this.handleDeletePost()}
+            />
+            : null
+          }
+          {comments.length ?
+            sortedComments.map(comment => 
+              <CommentEntry
+                key={comment.id}
+                upVote={() => this.props.dispatch(upVoteComment(post.post.id, comment.id))}
+                downVote={() => this.props.dispatch(downVoteComment(post.post.id, comment.id))}
+                onDelete={() => this.props.dispatch(deleteComment(comment))}
+                onEdit={() => this.setState({ commentDialogOpen: true, currentComment: comment })}
+                comment={comment}
+              />)
+            : null
+          }
+          <CommentDialog
+            comment={this.state.currentComment}
+            open={commentDialogOpen}
+            onSubmit={this.commentDialogSubmit}
+            onClose={() => this.setState({ commentDialogOpen: false, currentComment: null })}
           />
-          : null
-        }
-        {comments.length ?
-          sortedComments.map(comment => 
-            <CommentEntry
-              key={comment.id}
-              upVote={() => this.props.dispatch(upVoteComment(post.post.id, comment.id))}
-              downVote={() => this.props.dispatch(downVoteComment(post.post.id, comment.id))}
-              onDelete={() => this.props.dispatch(deleteComment(comment))}
-              onEdit={() => this.setState({ commentDialogOpen: true, currentComment: comment })}
-              comment={comment}
-            />)
-          : null
-        }
-        <CommentDialog
-          comment={this.state.currentComment}
-          open={commentDialogOpen}
-          onSubmit={this.commentDialogSubmit}
-          onClose={() => this.setState({ commentDialogOpen: false, currentComment: null })}
-        />
-        <PostDialog
-          post={currentPost}
-          categories={categories}
-          open={postDialogOpen}
-          onSubmit={this.postDialogSubmit}
-          onClose={() => this.setState({ postDialogOpen: false })}
-        />
+          <PostDialog
+            post={currentPost}
+            categories={categories}
+            open={postDialogOpen}
+            onSubmit={this.postDialogSubmit}
+            onClose={() => this.setState({ postDialogOpen: false })}
+          />
+        </div>
       </div>
     );
   }

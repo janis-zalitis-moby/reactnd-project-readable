@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { withRouter } from 'react-router';
 
+import { Card, CardText } from 'material-ui/Card';
+
 import {
   List,
   ListItem,
@@ -13,8 +15,6 @@ const categoryStyle = {
   marginTop: 20,
   marginRight: 20,
   maxWidth: 300,
-  padding: 20,
-  border: '1px solid #ccc',
 }
 
 class CategoryList extends Component {
@@ -23,17 +23,21 @@ class CategoryList extends Component {
     const { categories } = this.props;
     
     return (
-      <List style={categoryStyle}>
-        <Subheader>Categories</Subheader>
-        {categories.map(category => (
-          <ListItem
-            key={category.path}
-            onClick={() => this.context.router.history.push(`/category/${category.path}`)}
-          >
-            {category.name}
-          </ListItem>
-        ))}
-      </List>
+      <Card style={categoryStyle}>
+        <CardText>
+          <List>
+            <Subheader>Categories</Subheader>
+            {categories.map(category => (
+              <ListItem
+                key={category.path}
+                onClick={() => this.context.router.history.push(`/category/${category.path}`)}
+              >
+                {category.name}
+              </ListItem>
+            ))}
+          </List>
+        </CardText>
+      </Card>
     );
   }
 }

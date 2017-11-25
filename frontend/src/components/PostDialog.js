@@ -77,7 +77,7 @@ class PostDialog extends Component {
 
   render()
   {
-    const { open, onClose, categories } = this.props;
+    const { open, onClose, categories, post } = this.props;
     const { author, body, title, category } = this.state;
     
     const actions = [
@@ -96,7 +96,7 @@ class PostDialog extends Component {
     
     return (
       <Dialog
-        title="Type your post below"
+        title={(post && post.id ? "Edit post" : "Add new post")}
         actions={actions}
         modal={true}
         open={open}

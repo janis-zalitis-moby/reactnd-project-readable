@@ -37,6 +37,7 @@ a:hover
 
 .ReactVirtualized__Table__sortableHeaderColumn
 {
+  font-weight: bold;
   cursor: pointer;
   cursor: hand;
 }

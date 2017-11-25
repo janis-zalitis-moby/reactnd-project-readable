@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import { Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 
