@@ -17,42 +17,38 @@ const postsTableStyle = {
   float: 'left',
   marginTop: 20,
   marginLeft: 20,
-}
+};
 
 class Root extends Component {
-  
   state = {
     postDialogOpen: false,
   };
-  
+
   componentDidMount() {
     this.props.dispatch(fetchCategories());
-    if(this.props.match.params.category){
+    if (this.props.match.params.category) {
       this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
     } else {
       this.props.dispatch(fetchPosts());
     }
   }
-  
+
   componentWillReceiveProps(nextProps) {
     // if we navigated to new category
-    if(nextProps.match.params.category && nextProps.match.params.category !== this.props.match.params.category)
-    {
+    if (nextProps.match.params.category && nextProps.match.params.category !== this.props.match.params.category) {
       this.props.dispatch(fetchCategoryPosts(nextProps.match.params.category));
     }
 
-    if(nextProps.outdated && nextProps.outdated !== this.props.outdated)
-    {
-      if(this.props.match.params.category){        
+    if (nextProps.outdated && nextProps.outdated !== this.props.outdated) {
+      if (this.props.match.params.category) {
         this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
-        
       } else {
         this.props.dispatch(fetchPosts());
       }
     }
   }
-  
-  postDialogSubmit = (newPost) => {
+
+  postDialogSubmit = newPost => {
     this.props.dispatch(addPost(newPost));
 
     this.setState({ postDialogOpen: false });
@@ -61,7 +57,7 @@ class Root extends Component {
   render() {
     const { categories, posts } = this.props;
     const { postDialogOpen } = this.state;
-    
+
     return (
       <div>
         <TopBar />

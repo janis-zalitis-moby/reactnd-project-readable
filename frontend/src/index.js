@@ -27,10 +27,8 @@ const middleware = routerMiddleware(history);
 
 const store = createStore(
   reducers,
-  composeEnhancers(
-    applyMiddleware(middleware, thunk)
-  )
-)
+  composeEnhancers(applyMiddleware(middleware, thunk))
+);
 
 ReactDOM.render(
   <MuiThemeProvider>
@@ -55,5 +53,5 @@ ReactDOM.render(
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')
-)
-registerServiceWorker()
+);
+registerServiceWorker();
