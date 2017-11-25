@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 // visuals
-import {
-  AppBar,
-} from 'material-ui';
-
+import TopBar from './../../components/TopBar';
 import PostDialog from './../../components/PostDialog';
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
@@ -56,10 +53,7 @@ class Home extends Component {
     
     return (
       <div>
-        <AppBar
-          title="readable"
-          // iconElementLeft={false} // TODO: make it meaningful
-        />
+        <TopBar />
         <div style={postsTableStyle}>
           <PostsTable
             list={posts}

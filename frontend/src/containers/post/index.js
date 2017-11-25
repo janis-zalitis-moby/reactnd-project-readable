@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import {
-  AppBar,
-} from 'material-ui';
+import TopBar from './../../components/TopBar';
 
 import PostEntry from './../../components/PostEntry';
 import PostDialog from './../../components/PostDialog';
@@ -90,10 +88,7 @@ class Post extends Component {
 
     return (
       <div>
-        <AppBar
-          title="readable"
-          // iconElementLeft={false} // TODO: make it meaningful
-        />
+        <TopBar />
         <div style={postsContainerStyle}>
           {post.post ?
             <PostEntry

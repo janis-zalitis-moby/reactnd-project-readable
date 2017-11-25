@@ -22,7 +22,7 @@ class PostDialog extends Component {
     if(nextProps.post){
       this.setState({
         author: nextProps.post.author,
-        title: nextProps.post.category,
+        title: nextProps.post.title,
         body: nextProps.post.body,
         category: nextProps.post.category,
       });

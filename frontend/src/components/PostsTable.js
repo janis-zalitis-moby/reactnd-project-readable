@@ -72,6 +72,9 @@ class PostsTable extends Component {
     
     return sortedPosts;
   }
+  
+  noRowsRenderer = () =>
+    <div style={{ width: '100%', textAlign: 'center' }}>No posts found</div>
 
   render () {
     const { onNewPost, category } = this.props;
@@ -105,6 +108,7 @@ class PostsTable extends Component {
               sort={this.changeSort}
               sortBy={this.state.sortBy}
               sortDirection={this.state.sortDirection}
+              noRowsRenderer={(this.noRowsRenderer)}
             >
               <Column
                 label="Post title"

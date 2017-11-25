@@ -32,7 +32,7 @@ class CommentDialog extends Component {
     const { comment } = this.props;
     
     // existing comment
-    if (comment.id)
+    if (comment && comment.id)
     {
       const newComment = {
         ...comment,
