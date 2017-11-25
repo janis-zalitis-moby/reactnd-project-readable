@@ -18,7 +18,7 @@ const PostEntry = ({post, upVote, downVote, onEdit, onDelete, onComment}) => {
       <CardText>
         {post.body}
       </CardText>
-      <CardActions>
+      <CardActions style={{ textAlign: 'right' }}>
         <FlatButton label="Edit" onClick={onEdit} />
         <FlatButton label="Delete" onClick={onDelete} />
         <FlatButton label="Agree" onClick={upVote} />

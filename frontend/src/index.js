@@ -9,8 +9,7 @@ import thunk from 'redux-thunk';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Home from './containers/home';
-import Category from './containers/category';
+import Root from './containers/root';
 import Post from './containers/post';
 
 import registerServiceWorker from './registerServiceWorker';
@@ -41,11 +40,11 @@ ReactDOM.render(
           <Route
             exact
             path="/"
-            component={Home}
+            component={Root}
           />
           <Route
             path="/category/:category"
-            component={Category}
+            component={Root}
           />
           <Route
             path="/post/:postId"

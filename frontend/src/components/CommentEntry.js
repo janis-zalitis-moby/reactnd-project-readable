@@ -11,7 +11,7 @@ const CommentEntry = ({comment, upVote, downVote, onDelete, onEdit}) => {
         subtitle={`Commented by: ${comment.author}, on: ${date.toUTCString()}, votes: ${comment.voteScore}`}
       />
       <CardText>{comment.body}</CardText>
-      <CardActions>
+      <CardActions style={{ textAlign: 'right' }}>
         <FlatButton label="Edit" onClick={onEdit} />
         <FlatButton label="Delete" onClick={onDelete} />
         <FlatButton label="Agree" onClick={upVote} />

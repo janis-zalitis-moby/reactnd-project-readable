@@ -9,12 +9,9 @@ import PostDialog from './../../components/PostDialog';
 import PostsTable from './../../components/PostsTable';
 import CategoryList from './../../components/CategoryList';
 
-//styling
-// import styles from './index.css';
-
 // reducers
 import fetchCategories from './../../actions/categories';
-import { fetchCategoryPosts, addPost } from './../../actions/posts';
+import { fetchPosts, fetchCategoryPosts, addPost } from './../../actions/posts';
 
 const postsTableStyle = {
   float: 'left',
@@ -22,7 +19,7 @@ const postsTableStyle = {
   marginLeft: 20,
 }
 
-class Category extends Component {
+class Root extends Component {
   
   state = {
     postDialogOpen: false,
@@ -30,7 +27,11 @@ class Category extends Component {
   
   componentDidMount() {
     this.props.dispatch(fetchCategories());
-    this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
+    if(this.props.match.params.category){
+      this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
+    } else {
+      this.props.dispatch(fetchPosts());
+    }
   }
   
   componentWillReceiveProps(nextProps) {
@@ -39,18 +40,21 @@ class Category extends Component {
     {
       this.props.dispatch(fetchCategoryPosts(nextProps.match.params.category));
     }
-    
-    // if we got info that post data got updated
+
     if(nextProps.outdated && nextProps.outdated !== this.props.outdated)
     {
-      // refetch data
-      this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
+      if(this.props.match.params.category){        
+        this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
+        
+      } else {
+        this.props.dispatch(fetchPosts());
+      }
     }
   }
   
   postDialogSubmit = (newPost) => {
     this.props.dispatch(addPost(newPost));
-  
+
     this.setState({ postDialogOpen: false });
   }
 
@@ -67,7 +71,7 @@ class Category extends Component {
             posts={posts}
             categories={categories}
             onNewPost={() => this.setState({ postDialogOpen: true })}
-            category={this.props.match.params.category}
+            category={(this.props.match.params.category || null)}
           />
         </div>
         <div style={{ float: 'right', width: 305 }}>
@@ -76,7 +80,7 @@ class Category extends Component {
         <PostDialog
           post={null}
           categories={categories}
-          category={this.props.match.params.category}
+          category={(this.props.match.params.category || null)}
           open={postDialogOpen}
           onSubmit={this.postDialogSubmit}
           onClose={() => this.setState({ postDialogOpen: false })}
@@ -86,7 +90,7 @@ class Category extends Component {
   }
 }
 
-Category.propTypes = {
+Root.propTypes = {
   match: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   categories: PropTypes.array,
@@ -94,14 +98,15 @@ Category.propTypes = {
   outdated: PropTypes.bool,
 };
 
-Category.defaultProps = {
+Root.defaultProps = {
   categories: [],
   posts: [],
   outdated: false,
 };
 
+
 export default withRouter(connect(state => ({
   categories: state.categories.items,
   posts: state.posts.items,
   outdated: state.posts.outdated,
-}))(Category));
+}))(Root));
