@@ -80,13 +80,13 @@ class PostsTable extends Component {
     const { onNewPost, category } = this.props;
     const { sortedPosts } = this.state;
 
-    // <CardHeader title={(<span><Link to='/'>Back to home page</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}/>
+    // <CardHeader title={(<span><Link to='/'>Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}/>
 
     return (
         <Card>
           <CardTitle
             title={(category || "All posts")}
-            subtitle={(category ? <Link to='/'>Back to home page</Link> : null)}
+            subtitle={(category ? <Link to='/'>Back to all posts</Link> : null)}
           />
           <Divider />
           <CardText>

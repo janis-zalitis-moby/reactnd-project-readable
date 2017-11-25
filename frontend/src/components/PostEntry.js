@@ -9,7 +9,7 @@ const PostEntry = ({post, upVote, downVote, onEdit, onDelete, onComment}) => {
   return(
     <Card>
       <CardHeader
-        title={(<span><Link to='/'>Back to home page</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}
+        title={(<span><Link to='/'>Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}
       />
       <CardTitle
         title={post.title}
