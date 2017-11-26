@@ -30,7 +30,7 @@ const CategoryList = ({ categories }, context) =>
           {categories.map(category => (
             <ListItem
               key={category.path}
-              onClick={() => context.router.history.push(`/category/${category.path}`)}
+              onClick={() => context.router.history.push(`/${category.path}`)}
             >
               {category.name}
             </ListItem>

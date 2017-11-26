@@ -38,8 +38,14 @@ class Root extends Component {
 
   componentWillReceiveProps(nextProps) {
     // if we navigated to new category
-    if (nextProps.match.params.category && nextProps.match.params.category !== this.props.match.params.category) {
-      this.props.dispatch(fetchCategoryPosts(nextProps.match.params.category));
+    if (nextProps.match.params.category !== this.props.match.params.category) {
+      // if it's a category, fetch posts from that category
+      if (nextProps.match.params.category) {
+        this.props.dispatch(fetchCategoryPosts(nextProps.match.params.category));
+      } else {
+        // fetch all posts
+        this.props.dispatch(fetchPosts());
+      }
     }
 
     // if a post was added/edited/deleted, this flag will be true, so need to refresh data

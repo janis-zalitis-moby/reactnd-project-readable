@@ -15,7 +15,7 @@ const PostEntry = ({
   onDelete,
   onComment,
 }) => {
-  const categoryLink = `/category/${post.category}`;
+  const categoryLink = `/${post.category}`;
   const date = new Date(parseInt(post.timestamp, 10));
   return (
     <Card style={{ maxWidth: 957 }}>

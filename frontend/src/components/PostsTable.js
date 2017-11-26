@@ -115,7 +115,7 @@ class PostsTable extends Component {
               <Column
                 label="Post title"
                 cellRenderer={({ cellData, rowData }) =>
-                  (<Link to={`/post/${rowData.id}`}>{cellData}</Link>)
+                  (<Link to={`/${rowData.category}/${rowData.id}`}>{cellData}</Link>)
                 }
                 dataKey="title"
                 disableSort={false}

@@ -58,7 +58,7 @@ class Post extends Component {
     dispatch(deletePost(post.post.id));
 
     // redirect to category
-    this.context.router.history.push(`/category/${post.post.category}`);
+    this.context.router.history.push(`/${post.post.category}`);
   }
 
   /**
