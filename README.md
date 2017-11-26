@@ -33,3 +33,5 @@ To start app:
 * kept visuals to minimum, some minor styling glitches may happen
 * used AirBnB config for ESlint with minor changes, ignored a couple of non-fatal eslint warnings/errors where too strict
 * Table.noRowsRenderer doesn't appear to work in installed version of react-virtualized (non-stable?), didn't dig in which it does
+* Opted for always fully refreshing data when adding/editing/updating to reduce logic necessary for syncing
+* Used Yarn to develop locally
