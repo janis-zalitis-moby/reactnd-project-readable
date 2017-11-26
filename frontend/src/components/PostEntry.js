@@ -14,9 +14,11 @@ const PostEntry = ({
   onEdit,
   onDelete,
   onComment,
+  commentCount
 }) => {
   const categoryLink = `/${post.category}`;
   const date = new Date(parseInt(post.timestamp, 10));
+  const commentString = (commentCount ? `comments: ${commentCount}` : 'no comments yet');
   return (
     <Card style={{ maxWidth: 957 }}>
       <CardHeader
@@ -24,7 +26,7 @@ const PostEntry = ({
       />
       <CardTitle
         title={post.title}
-        subtitle={`Posted by: ${post.author}, on: ${date.toUTCString()}, votes: ${post.voteScore}`}
+        subtitle={`Posted by: ${post.author}, on: ${date.toUTCString()}, votes: ${post.voteScore}, ${commentString}`}
       />
       <CardText>
         {post.body}

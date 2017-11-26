@@ -44,7 +44,12 @@ class Post extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.post) {
-      this.setState({ post: nextProps.post });
+      if (!nextProps.post.post || nextProps.post.post === {}) {
+        // post does not exist, redirect back to home page
+        this.context.router.history.push('/');
+      } else {
+        this.setState({ post: nextProps.post });
+      }
     }
   }
 
@@ -119,6 +124,7 @@ class Post extends Component {
               onComment={() => this.setState({ commentDialogOpen: true, currentComment: null })}
               onEdit={() => this.setState({ postDialogOpen: true, currentPost: post.post })}
               onDelete={() => this.handleDeletePost()}
+              commentCount={comments.length}
             />
             : null
           }
