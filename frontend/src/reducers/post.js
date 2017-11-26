@@ -2,15 +2,14 @@ import {
   LOAD_POST,
 } from '../actions/post';
 
-export default function post (state = {}, action) {
-  const { type, post } = action;
-  switch (type) {
+export default function post(state = {}, action) {
+  switch (action.type) {
     case LOAD_POST:
-    return {
-      ...state,
-      post
-    };
-    default :
+      return {
+        ...state,
+        post: action.post,
+      };
+    default:
       return state;
   }
 }
