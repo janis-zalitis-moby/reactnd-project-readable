@@ -30,6 +30,6 @@ To start app:
 ## Notes:
 * best viewed on a screen resolution at least 1000px wide
 * used popular libs for ui - material-ui and react-virtualized
-* kept visuals to minimum, some minor styling glitches my happen
+* kept visuals to minimum, some minor styling glitches may happen
 * used AirBnB config for ESlint with minor changes, ignored a couple of non-fatal eslint warnings/errors where too strict
 * Table.noRowsRenderer doesn't appear to work in installed version of react-virtualized (non-stable?), didn't dig in which it does
