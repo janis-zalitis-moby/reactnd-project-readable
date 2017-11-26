@@ -24,7 +24,7 @@ export function fetchPosts() {
     axios
       .get(
         `${apiUrl}/posts`,
-        { headers: apiHeaders, withCredentials: true }
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadPosts(data.data));
@@ -38,7 +38,7 @@ export function fetchCategoryPosts(category) {
     axios
       .get(
         `${apiUrl}/${category}/posts`,
-        { headers: apiHeaders, withCredentials: true }
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadCategoryPosts(data.data));
@@ -53,7 +53,7 @@ export function addPost(post) {
       .post(
         `${apiUrl}/posts/`,
         post,
-        { headers: apiHeaders, withCredentials: true }
+        { headers: apiHeaders }
       )
       .then(() => {
         dispatch(updatePosts()); // trigger re-fetch
@@ -67,7 +67,7 @@ export function editPost(post) {
     axios
       .put(
         `${apiUrl}/posts/${post.id}`, post,
-        { headers: apiHeaders, withCredentials: true }
+        { headers: apiHeaders }
       )
       .then(() => {
         dispatch(updatePosts()); // re-fetch
@@ -81,7 +81,7 @@ export function deletePost(postId) {
     axios
       .delete(
         `${apiUrl}/posts/${postId}`,
-        { headers: apiHeaders, withCredentials: true }
+        { headers: apiHeaders }
       )
       .then(() => {
         dispatch(updatePosts()); // re-fetch

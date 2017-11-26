@@ -13,7 +13,7 @@ export default function fetchCategories() {
     axios
       .get(
         `${apiUrl}/categories`,
-        { headers: apiHeaders, withCredentials: true }
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadCategories(data.data.categories));
