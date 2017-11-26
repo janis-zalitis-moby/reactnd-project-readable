@@ -1,26 +1,35 @@
-# Readable API Server
+# Readable Project
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+This is my submission for Udacity's React Fundamentals course second Project - Readable.
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+## TL;DR
 
-## Start Developing
+To start app:
 
-To get started developing right away:
+1. Server:
+* go into server folder `cd api-server`
+* install dependencies with `npm install`
+* start the server with `npm start`
 
-* Install and start the API server
-    - `cd api-server`
-    - `npm install`
-    - `node server`
-* In another terminal window, install and start the pre-scaffolded Create React App project
-    - `cd frontend`
-    - `npm install`
-    - `npm start`
+2. Frontend
+* go into server folder `cd frontend`
+* install dependencies with `npm install`
+* start the frontend with `npm start`
 
-## API Server
-
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
-
-## Access The API Server
-
-To accesss the backend server in your code, we have stored the URL to the API server in the environment variable `REACT_APP_BACKEND` which you can access in your code using `process.env.REACT_APP_BACKEND`. You can see this in action in `frontend/src/App.js` in `componentDidMount`.
+## Common scenarios:
+1. To see all posts in category, click on category name on the "Categories" list.
+2. To see post contents and comments, click on post title from posts table.
+3. To manipulate content, use buttons at the bottom right
+  * "Add New Post"
+  * "Edit"
+  * "Delete"
+  * "Agree" (VoteScore+)
+  * "Disagree" (VoteScore-)
+  * "Reply" (= "Add new comment")
+  
+## Notes:
+* best viewed on a screen resolution at least 1000px wide
+* used popular libs for ui - material-ui and react-virtualized
+* kept visuals to minimum, some minor styling glitches my happen
+* used AirBnB config for ESlint with minor changes, ignored a couple of non-fatal eslint warnings/errors where too strict
+* Table.noRowsRenderer doesn't appear to work in installed version of react-virtualized (non-stable?), didn't dig in which it does
