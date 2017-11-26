@@ -10,13 +10,15 @@ import FlatButton from 'material-ui/FlatButton';
 import {
   Table,
   Column,
-  SortIndicator,
   SortDirection,
 } from 'react-virtualized';
 
 
 const rowHeight = 40;
 
+/**
+ * Renders posts table
+ */
 class PostsTable extends Component {
   state = {
     sortBy: 'voteScore',
@@ -38,6 +40,11 @@ class PostsTable extends Component {
     }
   }
 
+  /**
+   * handles change in sort direction or sort key/field
+   * @param  {string} sortBy        key/field to sort by
+   * @param  {string} sortDirection DESC/ASC
+   */
   changeSort = ({ sortBy, sortDirection }) => {
     this.setState({
       sortBy,
@@ -50,15 +57,11 @@ class PostsTable extends Component {
     });
   }
 
-  headerRenderer(props) {
-    return (
-      <div>
-        {props.label}
-        {props.sortBy === props.dataKey && <SortIndicator sortDirection={props.sortDirection} />}
-      </div>
-    );
-  }
-
+  /**
+   * sorting method
+   * @param  {array} posts posts to sort
+   * @return {array}       sorted posts
+   */
   sortPosts = posts => {
     const sortedPosts = posts.sort((a, b) => a[this.state.sortBy] < b[this.state.sortBy]);
 
@@ -69,8 +72,13 @@ class PostsTable extends Component {
     return sortedPosts;
   }
 
+  /**
+   * Render a single row informing when there are no posts
+   * NOTE: does not work likely due to an issue in the library, wasn't able to find mistakes in application
+   * @return {node} row to render when no posts were found
+   */
   noRowsRenderer = () =>
-    <div style={{ width: '100%', textAlign: 'center' }}>No posts found</div>
+    <div style={{ width: '100%', textAlign: 'center' }}>No posts found</div>;
 
   render() {
     const { onNewPost, category } = this.props;
@@ -102,7 +110,7 @@ class PostsTable extends Component {
               sort={this.changeSort}
               sortBy={this.state.sortBy}
               sortDirection={this.state.sortDirection}
-              noRowsRenderer={(this.noRowsRenderer)}
+              noRowsRenderer={this.noRowsRenderer}
             >
               <Column
                 label="Post title"

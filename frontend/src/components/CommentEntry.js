@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 
 import FlatButton from 'material-ui/FlatButton';
 
+/**
+ * Renders single comment
+ */
 const CommentEntry = ({
   comment,
   upVote,

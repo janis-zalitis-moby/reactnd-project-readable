@@ -16,6 +16,11 @@ const categoryStyle = {
   maxWidth: 300,
 };
 
+/**
+ * Renders a list of categories
+ * @param {array} categories categories to render
+ * @param {object} context   context as defined in contextTypes, used for navigation
+ */
 const CategoryList = ({ categories }, context) =>
   (
     <Card style={categoryStyle}>

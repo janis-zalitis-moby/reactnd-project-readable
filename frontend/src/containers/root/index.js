@@ -26,9 +26,12 @@ class Root extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchCategories());
+    // if category param is present in URL
     if (this.props.match.params.category) {
+      // fetch posts from that category
       this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
     } else {
+      // otherwise, fetch all posts
       this.props.dispatch(fetchPosts());
     }
   }
@@ -39,6 +42,7 @@ class Root extends Component {
       this.props.dispatch(fetchCategoryPosts(nextProps.match.params.category));
     }
 
+    // if a post was added/edited/deleted, this flag will be true, so need to refresh data
     if (nextProps.outdated && nextProps.outdated !== this.props.outdated) {
       if (this.props.match.params.category) {
         this.props.dispatch(fetchCategoryPosts(this.props.match.params.category));
@@ -48,6 +52,12 @@ class Root extends Component {
     }
   }
 
+  /**
+   * handles data submitted from Post add/edit dialog
+   * saves post
+   * closes dialog
+   * @param  {object} newPost the added post
+   */
   postDialogSubmit = newPost => {
     this.props.dispatch(addPost(newPost));
 

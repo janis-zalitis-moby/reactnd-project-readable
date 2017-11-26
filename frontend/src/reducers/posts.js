@@ -15,18 +15,18 @@ export default function posts(state = initialState, action) {
       return {
         ...state,
         items: action.posts,
-        outdated: false,
+        outdated: false, // reset the outdated flag because data have been refreshed
       };
     case LOAD_CATEGORY_POSTS:
       return {
         ...state,
         items: action.posts,
-        outdated: false,
+        outdated: false, // reset the outdated flag because data have been refreshed
       };
     case UPDATE_POSTS:
       return {
         ...state,
-        outdated: true,
+        outdated: true, // used after a post has been added/edited/deleted to identify need to refetch data
       };
     default:
       return state;

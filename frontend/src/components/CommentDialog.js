@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-// import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import uuidv1 from 'uuid/v1';
 
+/**
+ * Renders dialog for adding/editing a comment
+ */
 class CommentDialog extends Component {
   state = {
     author: '',
@@ -27,6 +29,12 @@ class CommentDialog extends Component {
 
   handleBodyChange = (e, body) => this.setState({ body });
 
+  /**
+   * handles submitting of comment data
+   * determines if this is a new comment or existing
+   * populates data accordingly
+   * delegates to onSubmit prop from parent component
+   */
   handleSubmit = () => {
     const { comment } = this.props;
 

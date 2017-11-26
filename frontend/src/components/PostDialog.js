@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-// import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 import uuidv1 from 'uuid/v1';
 
+/**
+ * Renders dialog for adding/editing a post
+ */
 class PostDialog extends Component {
   state = {
     author: '',
@@ -43,6 +45,12 @@ class PostDialog extends Component {
 
   handleCategoryChange = (e, category) => this.setState({ category: this.props.categories[category].path });
 
+  /**
+   * handles submitting of post data
+   * determines if this is a new post or existing
+   * populates data accordingly
+   * delegates to onSubmit prop from parent component
+   */
   handleSubmit = () => {
     const { post } = this.props;
 

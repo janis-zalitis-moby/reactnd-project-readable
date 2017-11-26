@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 
+/**
+ * Renders single post
+ */
 const PostEntry = ({
   post,
   upVote,

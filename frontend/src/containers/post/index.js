@@ -48,6 +48,10 @@ class Post extends Component {
     }
   }
 
+  /**
+   * handles deletion of post
+   * and redirects to parent category as post is no longer viewable
+   */
   handleDeletePost = () => {
     const { post, dispatch } = this.props;
 
@@ -57,6 +61,12 @@ class Post extends Component {
     this.context.router.history.push(`/category/${post.post.category}`);
   }
 
+  /**
+   * handles data submitted from Post add/edit dialog
+   * saves post
+   * closes dialog
+   * @param  {object} newPost the edited post
+   */
   postDialogSubmit = newPost => {
     this.props.dispatch(editPost(newPost));
 
@@ -67,6 +77,13 @@ class Post extends Component {
     });
   }
 
+  /**
+   * handles data submitted from Comment add/edit dialog
+   * detects if new or edited
+   * saves
+   * closes dialog
+   * @param  {object} newComment the new or edited comment
+   */
   commentDialogSubmit = newComment => {
     const { post } = this.state;
 
@@ -87,6 +104,7 @@ class Post extends Component {
       currentPost,
     } = this.state;
 
+    // sort comments by voteScore DESC
     const sortedComments = comments.sort((a, b) => a.voteScore < b.voteScore);
 
     return (
