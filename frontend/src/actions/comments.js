@@ -13,7 +13,7 @@ export function fetchCommentsForPost(postId) {
     axios
       .get(
         `${apiUrl}/posts/${postId}/comments`,
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(data => {
         dispatch(loadComments(data.data));
@@ -27,7 +27,7 @@ export function upVoteComment(postId, commentId) {
     axios
       .post(
         `${apiUrl}/comments/${commentId}`, { option: 'upVote' },
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchCommentsForPost(postId)); // re-fetch
@@ -41,7 +41,7 @@ export function downVoteComment(postId, commentId) {
     axios
       .post(
         `${apiUrl}/comments/${commentId}`, { option: 'downVote' },
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchCommentsForPost(postId)); // re-fetch
@@ -55,7 +55,7 @@ export function addComment(comment) {
     axios
       .post(
         `${apiUrl}/comments/`, comment,
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
@@ -69,7 +69,7 @@ export function editComment(comment) {
     axios
       .put(
         `${apiUrl}/comments/${comment.id}`, comment,
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
@@ -83,7 +83,7 @@ export function deleteComment(comment) {
     axios
       .delete(
         `${apiUrl}/comments/${comment.id}`,
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch

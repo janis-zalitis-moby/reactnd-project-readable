@@ -13,7 +13,7 @@ export function fetchPost(postId) {
     axios
       .get(
         `${apiUrl}/posts/${postId}`,
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(data => {
         dispatch(loadPost(data.data));
@@ -28,7 +28,7 @@ export function upVotePost(postId) {
       .post(
         `${apiUrl}/posts/${postId}`,
         { option: 'upVote' },
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchPost(postId)); // re-fetch
@@ -43,7 +43,7 @@ export function downVotePost(postId) {
     axios
       .post(
         `${apiUrl}/posts/${postId}`, { option: 'downVote' },
-        { headers: apiHeaders }
+        { headers: apiHeaders, withCredentials: true }
       )
       .then(() => {
         dispatch(fetchPost(postId)); // re-fetch
