@@ -13,37 +13,33 @@ class CommentDialog extends Component {
     author: '',
     body: '',
   };
-  
-  componentWillReceiveProps = (nextProps) => {
-    if(nextProps.comment){
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.comment) {
       this.setState({
         author: nextProps.comment.author,
         body: nextProps.comment.body,
       });
     }
   }
-  
+
   handleAuthorChange = (e, author) => this.setState({ author });
-  
+
   handleBodyChange = (e, body) => this.setState({ body });
-  
+
   handleSubmit = () => {
-    
     const { comment } = this.props;
-    
+
     // existing comment
-    if (comment && comment.id)
-    {
+    if (comment && comment.id) {
       const newComment = {
         ...comment,
         author: this.state.author,
         body: this.state.body,
         timestamp: new Date().getTime(),
-      }
+      };
       this.props.onSubmit(newComment);
-    }
-    else
-    {
+    } else {
       // fill data
       const newComment = {
         id: uuidv1(),
@@ -55,30 +51,29 @@ class CommentDialog extends Component {
     }
   }
 
-  render()
-  {
+  render() {
     const { open, onClose } = this.props;
     const { author, body } = this.state;
-    
+
     const actions = [
         <FlatButton
           label="Cancel"
-          primary={true}
+          primary
           onClick={onClose}
         />,
         <FlatButton
           label="Submit"
-          primary={true}
+          primary
           disabled={Boolean(!author.length || !body.length)}
           onClick={this.handleSubmit}
         />,
-      ]
-    
+    ];
+
     return (
       <Dialog
         title="Type your comment below"
         actions={actions}
-        modal={true}
+        modal
         open={open}
       >
         <TextField
@@ -93,14 +88,14 @@ class CommentDialog extends Component {
           floatingLabelText="Your comment"
           hintText="Please enter your comment"
           style={{ width: '100%' }}
-          multiLine={true}
+          multiLine
           value={body}
           onChange={this.handleBodyChange}
         />
       </Dialog>
     );
   }
-};
+}
 
 CommentDialog.propTypes = {
   comment: PropTypes.object,

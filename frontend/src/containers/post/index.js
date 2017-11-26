@@ -14,76 +14,79 @@ import CommentDialog from './../../components/CommentDialog';
 import fetchCategories from './../../actions/categories';
 import { fetchPost, upVotePost, downVotePost } from './../../actions/post';
 import { editPost, deletePost } from './../../actions/posts';
-import { 
-  fetchCommentsForPost, 
-  upVoteComment, 
-  downVoteComment, 
+import {
+  fetchCommentsForPost,
+  upVoteComment,
+  downVoteComment,
   addComment,
   deleteComment,
-  editComment
+  editComment,
 } from './../../actions/comments';
 
 const postsContainerStyle = {
   padding: 20,
-}
+};
 
 class Post extends Component {
-  
   state = {
     commentDialogOpen: false,
     currentComment: null,
     postDialogOpen: false,
     currentPost: null,
-    post: {}
+    post: {},
   };
-  
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.post)
-    {
-      this.setState({ post: nextProps.post });
-    }
-  }
-  
-  handleDeletePost = () => {
-    const { post, dispatch } = this.props;
-    
-    dispatch(deletePost(post.post.id));
-    
-    // redirect to category
-    this.context.router.history.push(`/category/${post.post.category}`);
-  }
-  
-  postDialogSubmit = (newPost) => {
-    this.props.dispatch(editPost(newPost));
 
-    this.setState({
-      postDialogOpen: false,
-      currentPost: null,
-      post: { post: newPost }
-    });
-  }
-  
-  commentDialogSubmit = (newComment) => {
-    const { post } = this.state;
-  
-    if(this.state.currentComment) {
-      this.props.dispatch(editComment(newComment));
-    } else {
-      this.props.dispatch(addComment({ parentId: post.post.id, ...newComment }));
-    }
-    this.setState({ commentDialogOpen: false, currentComment: null });
-  }
-  
   componentDidMount() {
     this.props.dispatch(fetchCategories());
     this.props.dispatch(fetchPost(this.props.match.params.postId));
     this.props.dispatch(fetchCommentsForPost(this.props.match.params.postId));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post) {
+      this.setState({ post: nextProps.post });
+    }
+  }
+
+  handleDeletePost = () => {
+    const { post, dispatch } = this.props;
+
+    dispatch(deletePost(post.post.id));
+
+    // redirect to category
+    this.context.router.history.push(`/category/${post.post.category}`);
+  }
+
+  postDialogSubmit = newPost => {
+    this.props.dispatch(editPost(newPost));
+
+    this.setState({
+      postDialogOpen: false,
+      currentPost: null,
+      post: { post: newPost },
+    });
+  }
+
+  commentDialogSubmit = newComment => {
+    const { post } = this.state;
+
+    if (this.state.currentComment) {
+      this.props.dispatch(editComment(newComment));
+    } else {
+      this.props.dispatch(addComment({ parentId: post.post.id, ...newComment }));
+    }
+    this.setState({ commentDialogOpen: false, currentComment: null });
+  }
+
   render() {
     const { comments, categories } = this.props;
-    const { post, commentDialogOpen, postDialogOpen, currentPost } = this.state;
-    
+    const {
+      post,
+      commentDialogOpen,
+      postDialogOpen,
+      currentPost,
+    } = this.state;
+
     const sortedComments = comments.sort((a, b) => a.voteScore < b.voteScore);
 
     return (
@@ -102,15 +105,15 @@ class Post extends Component {
             : null
           }
           {comments.length ?
-            sortedComments.map(comment => 
-              <CommentEntry
+            sortedComments.map(comment =>
+            (<CommentEntry
                 key={comment.id}
                 upVote={() => this.props.dispatch(upVoteComment(post.post.id, comment.id))}
                 downVote={() => this.props.dispatch(downVoteComment(post.post.id, comment.id))}
                 onDelete={() => this.props.dispatch(deleteComment(comment))}
                 onEdit={() => this.setState({ commentDialogOpen: true, currentComment: comment })}
                 comment={comment}
-              />)
+              />))
             : null
           }
           <CommentDialog
@@ -150,10 +153,10 @@ Post.contextTypes = {
   router: PropTypes.shape({
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
-      replace: PropTypes.func.isRequired
+      replace: PropTypes.func.isRequired,
     }).isRequired,
-    staticContext: PropTypes.object
-  }).isRequired
+    staticContext: PropTypes.object,
+  }).isRequired,
 };
 
 export default withRouter(connect(state => ({

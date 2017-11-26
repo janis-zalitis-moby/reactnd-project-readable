@@ -1,12 +1,20 @@
 import React from 'react';
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 
-const PostEntry = ({post, upVote, downVote, onEdit, onDelete, onComment}) => {
+const PostEntry = ({
+  post,
+  upVote,
+  downVote,
+  onEdit,
+  onDelete,
+  onComment,
+}) => {
   const categoryLink = `/category/${post.category}`;
   const date = new Date(parseInt(post.timestamp, 10));
-  return(
+  return (
     <Card style={{ maxWidth: 957 }}>
       <CardHeader
         title={(<span><Link to='/'>Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}
@@ -28,5 +36,15 @@ const PostEntry = ({post, upVote, downVote, onEdit, onDelete, onComment}) => {
     </Card>
   );
 };
+
+PostEntry.propTypes = {
+  post: PropTypes.object.isRequired,
+  upVote: PropTypes.func.isRequired,
+  downVote: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onComment: PropTypes.func.isRequired,
+};
+
 
 export default PostEntry;

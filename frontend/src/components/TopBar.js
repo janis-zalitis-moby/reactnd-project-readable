@@ -5,9 +5,11 @@ import {
 } from 'material-ui';
 
 const TopBar = () =>
-  <AppBar
-    title="Readable @ Udacity nanodegree, by Janis Zalitis"
-    iconElementLeft={<span></span>}
-  />;
+  (
+    <AppBar
+      title="Readable @ Udacity nanodegree, by Janis Zalitis"
+      iconElementLeft={<span />}
+    />
+  );
 
 export default TopBar;
