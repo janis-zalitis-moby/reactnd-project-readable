@@ -11,100 +11,83 @@ const loadComments = comments => ({
 export function fetchCommentsForPost(postId) {
   return dispatch => {
     axios
-      .get(`${apiUrl}/posts/${postId}/comments`,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .get(
+        `${apiUrl}/posts/${postId}/comments`,
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('fetch error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('fetch error', err); });
   };
-};
+}
 
 export function upVoteComment(postId, commentId) {
   return dispatch => {
     axios
-      .post(`${apiUrl}/comments/${commentId}`, { option: 'upVote' },
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .post(
+        `${apiUrl}/comments/${commentId}`, { option: 'upVote' },
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchCommentsForPost(postId)); // re-fetch
-        // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function downVoteComment(postId, commentId) {
   return dispatch => {
     axios
-      .post(`${apiUrl}/comments/${commentId}`, { option: 'downVote' },
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .post(
+        `${apiUrl}/comments/${commentId}`, { option: 'downVote' },
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchCommentsForPost(postId)); // re-fetch
-        // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function addComment(comment) {
   return dispatch => {
     axios
-      .post(`${apiUrl}/comments/`, comment,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .post(
+        `${apiUrl}/comments/`, comment,
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
-        // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function editComment(comment) {
   return dispatch => {
     axios
-      .put(`${apiUrl}/comments/${comment.id}`, comment,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .put(
+        `${apiUrl}/comments/${comment.id}`, comment,
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
-        // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function deleteComment(comment) {
   return dispatch => {
     axios
-      .delete(`${apiUrl}/comments/${comment.id}`,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .delete(
+        `${apiUrl}/comments/${comment.id}`,
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchCommentsForPost(comment.parentId)); // re-fetch
-        // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('delete error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('delete error', err); });
   };
 }

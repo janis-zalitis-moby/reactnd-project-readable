@@ -16,89 +16,76 @@ const loadCategoryPosts = posts => ({
 });
 
 const updatePosts = () => ({
-  type: UPDATE_POSTS
+  type: UPDATE_POSTS,
 });
 
 export function fetchPosts() {
   return dispatch => {
-    // dispatch(startPosts()); // TODO: make a loading param
-    
     axios
-      .get(`${apiUrl}/posts`,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .get(
+        `${apiUrl}/posts`,
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadPosts(data.data));
       })
-      .catch(err => { window.console.info('fetch error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('fetch error', err); });
   };
 }
 
 export function fetchCategoryPosts(category) {
   return dispatch => {
-    // dispatch(startPosts()); // TODO: make a loading param
-    
     axios
-      .get(`${apiUrl}/${category}/posts`,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .get(
+        `${apiUrl}/${category}/posts`,
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadCategoryPosts(data.data));
       })
-      .catch(err => { window.console.info('fetch error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('fetch error', err); });
   };
 }
 
 export function addPost(post) {
   return dispatch => {
     axios
-      .post(`${apiUrl}/posts/`, post,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .post(
+        `${apiUrl}/posts/`,
+        post,
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(updatePosts()); // trigger re-fetch
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function editPost(post) {
   return dispatch => {
     axios
-      .put(`${apiUrl}/posts/${post.id}`, post,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .put(
+        `${apiUrl}/posts/${post.id}`, post,
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(updatePosts()); // re-fetch
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function deletePost(postId) {
   return dispatch => {
     axios
-      .delete(`${apiUrl}/posts/${postId}`,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .delete(
+        `${apiUrl}/posts/${postId}`,
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(updatePosts()); // re-fetch
       })
-      .catch(err => { window.console.info('delete error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('delete error', err); });
   };
-};
+}

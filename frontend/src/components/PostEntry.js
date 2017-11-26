@@ -17,7 +17,7 @@ const PostEntry = ({
   return (
     <Card style={{ maxWidth: 957 }}>
       <CardHeader
-        title={(<span><Link to='/'>Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}
+        title={(<span><Link to="/">Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}
       />
       <CardTitle
         title={post.title}

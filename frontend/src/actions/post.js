@@ -10,52 +10,44 @@ const loadPost = post => ({
 
 export function fetchPost(postId) {
   return dispatch => {
-    // dispatch(startPosts()); // TODO: make a loading param
-    
     axios
-      .get(`${apiUrl}/posts/${postId}`,
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .get(
+        `${apiUrl}/posts/${postId}`,
+        { headers: apiHeaders }
       )
       .then(data => {
         dispatch(loadPost(data.data));
       })
-      .catch(err => { window.console.info('fetch error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('fetch error', err); });
   };
 }
 
 export function upVotePost(postId) {
   return dispatch => {
     axios
-      .post(`${apiUrl}/posts/${postId}`, { option: 'upVote' },
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .post(
+        `${apiUrl}/posts/${postId}`,
+        { option: 'upVote' },
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchPost(postId)); // re-fetch
         // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}
 
 export function downVotePost(postId) {
   return dispatch => {
     axios
-      .post(`${apiUrl}/posts/${postId}`, { option: 'downVote' },
-        {
-          //withCredentials: true,
-          headers: apiHeaders
-        }
+      .post(
+        `${apiUrl}/posts/${postId}`, { option: 'downVote' },
+        { headers: apiHeaders }
       )
-      .then(data => {
+      .then(() => {
         dispatch(fetchPost(postId)); // re-fetch
-        // dispatch(loadComments(data.data));
       })
-      .catch(err => { window.console.info('post error'); }); // TODO: make an error param
+      .catch(err => { window.console.info('post error', err); });
   };
-};
+}

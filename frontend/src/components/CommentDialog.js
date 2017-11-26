@@ -56,12 +56,12 @@ class CommentDialog extends Component {
     const { author, body } = this.state;
 
     const actions = [
-        <FlatButton
+      <FlatButton
           label="Cancel"
           primary
           onClick={onClose}
         />,
-        <FlatButton
+      <FlatButton
           label="Submit"
           primary
           disabled={Boolean(!author.length || !body.length)}

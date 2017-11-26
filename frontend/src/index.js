@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter } from 'react-router-dom';
+
 import { routerMiddleware } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -9,14 +9,14 @@ import thunk from 'redux-thunk';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Root from './containers/root';
-import Post from './containers/post';
+import App from './App';
 
 import registerServiceWorker from './registerServiceWorker';
 
 import reducers from './reducers';
 import './index.css';
 
+// eslint-disable-next-line
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -33,23 +33,7 @@ const store = createStore(
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
-      <BrowserRouter>
-        <div>
-          <Route
-            exact
-            path="/"
-            component={Root}
-          />
-          <Route
-            path="/category/:category"
-            component={Root}
-          />
-          <Route
-            path="/post/:postId"
-            component={Post}
-          />
-        </div>
-      </BrowserRouter>
+      <App />
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')

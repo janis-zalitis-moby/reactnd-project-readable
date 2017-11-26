@@ -18,41 +18,38 @@ import {
 const rowHeight = 40;
 
 class PostsTable extends Component {
-  
   state = {
     sortBy: 'voteScore',
     sortDirection: SortDirection.ASC,
-    sortedPosts: []
+    sortedPosts: [],
   };
-  
-  componentWillReceiveProps = (nextProps) => {
+
+  componentWillReceiveProps = nextProps => {
     const { posts } = nextProps;
 
-    if(posts.length){
+    if (posts.length) {
       this.setState({
-        sortedPosts: this.sortPosts(posts)
+        sortedPosts: this.sortPosts(posts),
       });
-    }
-    else
-    {
+    } else {
       this.setState({
-        sortedPosts: []
+        sortedPosts: [],
       });
     }
   }
-  
-  changeSort = ({sortBy, sortDirection}) => {
-    this.setState({ 
-      sortBy, 
+
+  changeSort = ({ sortBy, sortDirection }) => {
+    this.setState({
+      sortBy,
       sortDirection: (
         this.state.sortBy !== sortBy ? SortDirection.ASC
-        : (sortDirection !== SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC)
-      )
+          : (sortDirection !== SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC)
+      ),
     }, () => {
       this.setState({ sortedPosts: this.sortPosts(this.props.posts) });
-    })
+    });
   }
-  
+
   headerRenderer(props) {
     return (
       <div>
@@ -61,32 +58,29 @@ class PostsTable extends Component {
       </div>
     );
   }
-  
-  sortPosts = posts =>
-  {
+
+  sortPosts = posts => {
     const sortedPosts = posts.sort((a, b) => a[this.state.sortBy] < b[this.state.sortBy]);
-    
-    if(this.state.sortDirection === SortDirection.DESC) {
-      sortedPosts.reverse()
-    };
-    
+
+    if (this.state.sortDirection === SortDirection.DESC) {
+      sortedPosts.reverse();
+    }
+
     return sortedPosts;
   }
-  
+
   noRowsRenderer = () =>
     <div style={{ width: '100%', textAlign: 'center' }}>No posts found</div>
 
-  render () {
+  render() {
     const { onNewPost, category } = this.props;
     const { sortedPosts } = this.state;
-
-    // <CardHeader title={(<span><Link to='/'>Back to all posts</Link> &#124; <Link to={categoryLink}>Back to this post&apos;s category</Link></span>)}/>
 
     return (
         <Card>
           <CardTitle
-            title={(category || "All posts")}
-            subtitle={(category ? <Link to='/'>Back to all posts</Link> : null)}
+            title={(category || 'All posts')}
+            subtitle={(category ? <Link to="/">Back to all posts</Link> : null)}
           />
           <Divider />
           <CardText>
@@ -112,7 +106,7 @@ class PostsTable extends Component {
             >
               <Column
                 label="Post title"
-                cellRenderer={({cellData, rowData}) => 
+                cellRenderer={({ cellData, rowData }) =>
                   (<Link to={`/post/${rowData.id}`}>{cellData}</Link>)
                 }
                 dataKey="title"
@@ -122,21 +116,21 @@ class PostsTable extends Component {
               />
               <Column
                 label="Author"
-                cellRenderer={({cellData}) => cellData}
+                cellRenderer={({ cellData }) => cellData}
                 dataKey="author"
                 disableSort={false}
                 width={120}
               />
               <Column
                 label="Category"
-                cellRenderer={({cellData}) => cellData}
+                cellRenderer={({ cellData }) => cellData}
                 dataKey="category"
                 disableSort={false}
                 width={120}
               />
               <Column
                 label="Score"
-                cellRenderer={({cellData}) => cellData}
+                cellRenderer={({ cellData }) => cellData}
                 dataKey="voteScore"
                 disableSort={false}
                 width={60}
@@ -148,7 +142,7 @@ class PostsTable extends Component {
             <FlatButton label="Add New Post" onClick={onNewPost} />
           </CardActions>
         </Card>
-      );
+    );
   }
 }
 
@@ -163,7 +157,7 @@ PostsTable.defaultProps = {
   categories: [],
   posts: [],
   onNewPost: null,
-  category: null
+  category: null,
 };
 
 export default PostsTable;
