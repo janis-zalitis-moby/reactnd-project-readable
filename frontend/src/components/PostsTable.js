@@ -7,6 +7,11 @@ import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 
+import EditIcon from 'material-ui/svg-icons/content/create';
+import DeleteIcon from 'material-ui/svg-icons/content/clear';
+import PlusIcon from 'material-ui/svg-icons/content/add';
+import MinusIcon from 'material-ui/svg-icons/content/remove';
+
 import {
   Table,
   Column,
@@ -15,6 +20,10 @@ import {
 
 
 const rowHeight = 40;
+
+const iconStyle = {
+  cursor: 'pointer',
+}
 
 /**
  * Renders posts table
@@ -81,7 +90,7 @@ class PostsTable extends Component {
     <div style={{ width: '100%', textAlign: 'center' }}>No posts found</div>;
 
   render() {
-    const { onNewPost, category } = this.props;
+    const { onNewPost, category, upVote, downVote, onEdit, onDelete } = this.props;
     const { sortedPosts } = this.state;
 
     return (
@@ -127,20 +136,45 @@ class PostsTable extends Component {
                 cellRenderer={({ cellData }) => cellData}
                 dataKey="author"
                 disableSort={false}
-                width={120}
+                width={70}
               />
               <Column
                 label="Category"
                 cellRenderer={({ cellData }) => cellData}
                 dataKey="category"
                 disableSort={false}
-                width={120}
+                width={70}
+              />
+              <Column
+                label="Comments"
+                cellRenderer={({ cellData }) => cellData}
+                dataKey="commentCount"
+                disableSort={false}
+                width={80}
               />
               <Column
                 label="Score"
-                cellRenderer={({ cellData }) => cellData}
+                cellRenderer={({ cellData, rowData }) => (
+                  <span style={{ height: 24, display: 'inline-block' }}>
+                    {cellData}
+                    <PlusIcon onClick={() => upVote(rowData.id)} style={iconStyle} />
+                    <MinusIcon onClick={() => downVote(rowData.id)} style={iconStyle} />
+                  </span>
+                )}
                 dataKey="voteScore"
                 disableSort={false}
+                width={80}
+              />
+              <Column
+                label="Actions"
+                cellRenderer={({ cellData, rowData }) => (
+                  <span>
+                    <EditIcon onClick={() => onEdit(rowData)} style={iconStyle} />
+                    <DeleteIcon onClick={() => onDelete(rowData)} style={iconStyle} />
+                  </span>
+                )}
+                dataKey=""
+                disableSort
                 width={60}
               />
             </Table>
@@ -159,6 +193,10 @@ PostsTable.propTypes = {
   posts: PropTypes.array,
   onNewPost: PropTypes.func,
   category: PropTypes.string,
+  upVote: PropTypes.func,
+  downVote: PropTypes.func,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 PostsTable.defaultProps = {
@@ -166,6 +204,10 @@ PostsTable.defaultProps = {
   posts: [],
   onNewPost: null,
   category: null,
+  upVote: null,
+  downVote: null,
+  onEdit: null,
+  onDelete: null
 };
 
 export default PostsTable;

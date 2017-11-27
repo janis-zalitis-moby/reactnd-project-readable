@@ -35,6 +35,7 @@ a:hover
   align-items: center;
 }
 
+.ReactVirtualized__Table__headerColumn,
 .ReactVirtualized__Table__sortableHeaderColumn
 {
   font-weight: bold;
