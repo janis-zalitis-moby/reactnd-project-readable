@@ -10,7 +10,7 @@ const loadPost = post => ({
 
 export function fetchPost(postId) {
   return dispatch => {
-    dispatch(loadPost({})); // clear post data
+    dispatch(loadPost(null)); // clear post data
     axios
       .get(
         `${apiUrl}/posts/${postId}`,
@@ -20,7 +20,7 @@ export function fetchPost(postId) {
         dispatch(loadPost(data.data));
       })
       .catch((err) => { 
-        dispatch(loadPost({ id: false })); // signifies non existant post
+        dispatch(loadPost({})); // signifies non existant post
       });
   };
 }
@@ -52,5 +52,19 @@ export function downVotePost(postId) {
         dispatch(fetchPost(postId)); // re-fetch
       })
       .catch(err => { window.console.info('post error', err); });
+  };
+}
+
+export function deletePost(postId) {
+  return dispatch => {
+    axios
+      .delete(
+        `${apiUrl}/posts/${postId}`,
+        { headers: apiHeaders }
+      )
+      .then(() => {
+        dispatch(loadPost({})); // clear post data
+      })
+      .catch(err => { window.console.info('delete error', err); });
   };
 }

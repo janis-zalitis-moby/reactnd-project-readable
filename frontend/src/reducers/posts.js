@@ -3,6 +3,7 @@ import {
   LOAD_CATEGORY_POSTS,
   UPDATE_POSTS,
   UPDATE_POST,
+  UPDATE_POST_COMMENTS,
 } from '../actions/posts';
 
 const initialState = {
@@ -46,6 +47,22 @@ export default function posts(state = initialState, action) {
         ...state,
         items: newPosts, // used after a post has been edited or voted on to update data without refetch
       };
+    case UPDATE_POST_COMMENTS:
+      if (state.items.length) {
+        const index = state.items.findIndex(el => el.id === action.post.id);
+        
+        if (index !== -1) {
+          const newPosts = [ ...state.items ];
+          newPosts[index] = { ...newPosts[index], commentCount: action.commentCount }; // replace comment count
+
+          return {
+            ...state,
+            items: newPosts, // used to update comment count, to prevent comment recount recreating deleted posts
+          };
+        }
+      }
+      // return state as-is
+      return state;
     default:
       return state;
   }

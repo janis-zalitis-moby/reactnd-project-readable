@@ -5,6 +5,7 @@ export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_CATEGORY_POSTS = 'LOAD_CATEGORY_POSTS';
 export const UPDATE_POSTS = 'UPDATE_POSTS';
 export const UPDATE_POST = 'UPDATE_POST';
+export const UPDATE_POST_COMMENTS = 'UPDATE_POST_COMMENTS';
 
 const loadPosts = posts => ({
   type: LOAD_POSTS,
@@ -24,6 +25,12 @@ const updatePosts = () => ({
 // updates the current post inside store
 const updatePost = post => ({
   type: UPDATE_POST,
+  post
+});
+
+// updates the comment count for current post inside store
+const updatePostComments = post => ({
+  type: UPDATE_POST_COMMENTS,
   post
 });
 
@@ -136,7 +143,7 @@ export function fetchCommentCount(post) {
       )
       .then(data => {
         const newPost = { ...post, commentCount: data.data.length }; // clone to avoid manipulating store directly
-        dispatch(updatePost(newPost)); // update post data with commentCount
+        dispatch(updatePostComments(newPost)); // update post data with commentCount
       })
       .catch(err => { window.console.info('fetch error', err); });
   };

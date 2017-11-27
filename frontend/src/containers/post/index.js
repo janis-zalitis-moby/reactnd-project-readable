@@ -12,8 +12,8 @@ import CommentEntry from './../../components/CommentEntry';
 import CommentDialog from './../../components/CommentDialog';
 
 import fetchCategories from './../../actions/categories';
-import { fetchPost, upVotePost, downVotePost } from './../../actions/post';
-import { editPost, deletePost } from './../../actions/posts';
+import { fetchPost, upVotePost, downVotePost, deletePost } from './../../actions/post';
+import { editPost } from './../../actions/posts';
 import {
   fetchCommentsForPost,
   upVoteComment,
@@ -33,7 +33,7 @@ class Post extends Component {
     currentComment: null,
     postDialogOpen: false,
     currentPost: null,
-    post: {},
+    post: null,
   };
 
   componentDidMount() {
@@ -44,7 +44,7 @@ class Post extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.post) {
-      if (nextProps.post.post && nextProps.post.post.id === false) {
+      if (nextProps.post.post && !nextProps.post.post.id) {
         // post does not exist, redirect back to home page
         this.context.router.history.push('/');
       } else {
@@ -61,9 +61,6 @@ class Post extends Component {
     const { post, dispatch } = this.props;
 
     dispatch(deletePost(post.post.id));
-
-    // redirect to category
-    this.context.router.history.push(`/${post.post.category}`);
   }
 
   /**
@@ -116,7 +113,7 @@ class Post extends Component {
       <div>
         <TopBar />
         <div style={postsContainerStyle}>
-          {post.post ?
+          {post && post.post ?
             <PostEntry
               post={post.post}
               upVote={() => this.props.dispatch(upVotePost(post.post.id))}
