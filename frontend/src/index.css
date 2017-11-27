@@ -42,3 +42,8 @@ a:hover
   cursor: pointer;
   cursor: hand;
 }
+
+ReactVirtualized__Table__rowColumn::after
+{
+  clear: both;
+}

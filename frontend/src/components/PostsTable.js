@@ -23,6 +23,7 @@ const rowHeight = 40;
 
 const iconStyle = {
   cursor: 'pointer',
+  float: 'left',
 }
 
 /**
@@ -156,7 +157,7 @@ class PostsTable extends Component {
                 label="Score"
                 cellRenderer={({ cellData, rowData }) => (
                   <span style={{ height: 24, display: 'inline-block' }}>
-                    {cellData}
+                    <span style={{ float: 'left', display: 'inline-block', height: 24, lineHeight: '24px' }}>{cellData}</span>
                     <PlusIcon onClick={() => upVote(rowData.id)} style={iconStyle} />
                     <MinusIcon onClick={() => downVote(rowData.id)} style={iconStyle} />
                   </span>
