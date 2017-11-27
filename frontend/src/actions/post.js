@@ -10,6 +10,7 @@ const loadPost = post => ({
 
 export function fetchPost(postId) {
   return dispatch => {
+    dispatch(loadPost({})); // clear post data
     axios
       .get(
         `${apiUrl}/posts/${postId}`,
@@ -18,7 +19,9 @@ export function fetchPost(postId) {
       .then(data => {
         dispatch(loadPost(data.data));
       })
-      .catch(err => { window.console.info('fetch error', err); });
+      .catch((err) => { 
+        dispatch(loadPost({ id: false })); // signifies non existant post
+      });
   };
 }
 

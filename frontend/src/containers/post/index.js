@@ -44,7 +44,7 @@ class Post extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.post) {
-      if (!nextProps.post.post || nextProps.post.post === {}) {
+      if (nextProps.post.post && nextProps.post.post.id === false) {
         // post does not exist, redirect back to home page
         this.context.router.history.push('/');
       } else {

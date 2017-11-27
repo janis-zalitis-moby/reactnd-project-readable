@@ -75,7 +75,10 @@ class Root extends Component {
        // NOTE: this has a hole in it, 
        // but I think it should be solved by extending the API to return comment count as part of post endpoint
        // as it is highly inefficient to make a separate call for every post just to count its comments
-      if (nextProps.posts.length !== this.props.posts.length) {
+      if (
+        nextProps.posts.length !== this.state.posts.length
+        || nextProps.match.params.category !== this.props.match.params.category // OR navigation happened
+      ) {
         this.setState({
           posts: nextProps.posts,
         }, () => this.triggerCommentRecount());        
